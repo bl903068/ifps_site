@@ -1,4 +1,6 @@
 IfpsSite::Application.routes.draw do
+  get "static_pages/home"
+
   get "welcome/index"
 
   # The priority is based upon order of creation:
