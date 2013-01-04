@@ -1,19 +1,24 @@
+
+<% if signed_in? %>
 <%= form_for(@publication) do |f| %>
 	<%= render 'shared/error_messages', object: f.object %>
 	<div class="field">
-		<%= f.text_area :title, placeholder: "Enter your title" %>
+		<%= f.text_area :title, rows: "1", placeholder: "Enter your title" %>
 	</div>
 	<div class="field">
-		<%= f.text_area :ptype, placeholder: "Enter your type(news,conference)" %>
+		<%= f.text_area :ptype, rows: "1", placeholder: "Enter your type(news,conference)" %>
 	</div>
 	<div class="field">
-		<%= f.text_area :nameofpublication, placeholder: "Enter name of the publication(news name,conf name)" %>
+		<%= f.text_area :nameofpublication, rows: "2", placeholder: "Enter name of the publication(news name,conf name)" %>
 	</div>
 	<div class="field">
-		<%= f.text_area :resume, placeholder: "Compose the resume of publication here" %>
+		<%= f.text_area :resume, rows: "4",placeholder: "Compose the resume of publication here" %>
 	</div>
 	<div class="field">
-		<%= f.text_area :content, placeholder: "Compose your publication content here" %>
+		<%= f.text_area :content, rows: "11", placeholder: "Compose your publication content here" %>
 	</div>
 	<%= f.submit "Post", class: "btn btn-large btn-primary" %>
+<% end %>
+<% else %>
+	<li><%= link_to "Sign in", signin_path %></li>
 <% end %>

@@ -1,6 +1,6 @@
 <li>
 	<h4 class="title">
-		<%= link_to publication.title, publication_path %>
+		<%= link_to publication.title, publication %>
 	</h4>
 	<span class="ptype">
 		<%= publication.ptype %>
@@ -12,6 +12,6 @@
 		<%= publication.resume %>
 	</span>
 	<span class="timestamp">
-		Posted <%= time_ago_in_words(publication.created_at) %> ago.
+		Posted: <%= publication.created_at.to_date %>.
 	</span>
 </li>

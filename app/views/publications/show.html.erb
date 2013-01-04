@@ -1,15 +1,17 @@
 <%= provide(:title, @publication.title) %>
-
 <h1> <%= @publication.title %></h1>
+</br>
 <span class="ptype">
-		<%= publication.ptype %>
+		<%= @publication.ptype %>
 </span>
 <span class="nameofpublication">
-		<%= publication.nameofpublication %>
+		<%= @publication.nameofpublication %>
 </span>
+</br></br>
 <div class="content">
-	<%= @publication.contenu %>
+	<%= @publication.content %>
 </div>
+</br></br></br>
 <span class="timestamp">
-		Posted <%= time_ago_in_words(publication.created_at) %> ago.
+		Posted: <%= @publication.created_at.to_date %>. <a href="../users/<%= @publication.user_id %>">Watch the publicator Profile</a>.
 </span>

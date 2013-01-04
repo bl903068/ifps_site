@@ -1,0 +1,25 @@
+<h1>All publications</h1>
+
+<%= will_paginate %>
+<ul class="publi">
+	<% @publications.each do |publication| %>
+		<li>
+			<h4 class="title">
+				<%= link_to publication.title, publication %>
+			</h4>
+			<span class="ptype">
+				<%= publication.ptype %>
+			</span>
+			<span class="nameofpublication">
+				<%= publication.nameofpublication %>
+			</span>
+			<span class="resume">
+				<%= publication.resume %>
+			</span>
+			<span class="timestamp">
+				Posted: <%= publication.created_at.to_date %>. 
+			</span>
+		</li>
+	<% end %>
+</ul>
+<%= will_paginate %>
