@@ -20,5 +20,15 @@ namespace :db do
                    password: password,
                    password_confirmation: password)
     end
+
+    users = User.all(limit: 6)
+    50.times do |n|
+      title = "title-#{n+1}"
+      ptype = "News"
+      nameofpublication = "Conf"
+      resume = Faker::Lorem.sentence(5)
+      content = Faker::Lorem.sentence(10)
+      users.each { |user| user.publications.create!(title: title, ptype: ptype, nameofpublication: nameofpublication, resume: resume, content: content) }
+    end
   end
 end

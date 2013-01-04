@@ -17,6 +17,7 @@ describe User do
 	it { should respond_to(:password_confirmation) }
 	it { should respond_to(:remember_token) }
 	it { should respond_to(:authenticate) }
+	it { should respond_to(:publications) }
 
 	it { should be_valid }
 	
@@ -121,5 +122,28 @@ describe User do
 		before { @user.save }
 		its(:remember_token) { should_not be_blank }
 	end
-end
 
+	describe "publication associations" do
+
+		before { @user.save }
+		let!(:older_publication) do
+			FactoryGirl.create(:publication, user: @user, created_at: 1.day.ago)
+		end
+		let!(:newer_publication) do
+			FactoryGirl.create(:publication, user: @user, created_at: 1.hour.ago)
+		end
+
+		it "should have the right publications in the right order" do
+			@user.publications.should == [newer_publication, older_publication]
+		end
+
+		it "should destroy associated publications" do
+			publications = @user.publications.dup
+			@user.destroy
+			publications.should_not be_empty
+			publications.each do |publication|
+				Publication.find_by_id(publication.id).should be_nil
+			end
+		end
+	end
+end

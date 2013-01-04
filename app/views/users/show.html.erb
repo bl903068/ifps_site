@@ -1,2 +1,19 @@
 <% provide(:title, @user.name) %>
-<h1><%= @user.name %></h1>
+<div class="row">
+	<aside class="span4">
+		<section>
+			<h1>
+				<%= @user.name %>
+			</h1>
+		</section>
+	</aside>
+	<div class="span8">
+		<% if @user.publications.any? %>
+			<h3>Publications (<%= @user.publications.count %>)</h3>
+			<ol class="publications">
+				<%= render @publications %>
+			</ol>
+			<%= will_paginate @publications %>
+		<% end %>
+	</div>
+</div>

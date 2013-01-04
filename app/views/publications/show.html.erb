@@ -1,0 +1,15 @@
+<%= provide(:title, @publication.title) %>
+
+<h1> <%= @publication.title %></h1>
+<span class="ptype">
+		<%= publication.ptype %>
+</span>
+<span class="nameofpublication">
+		<%= publication.nameofpublication %>
+</span>
+<div class="content">
+	<%= @publication.contenu %>
+</div>
+<span class="timestamp">
+		Posted <%= time_ago_in_words(publication.created_at) %> ago.
+</span>
