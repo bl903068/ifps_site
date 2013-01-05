@@ -11,6 +11,12 @@ describe "Authentication" do
 		it { should have_selector('title', 'Sign in') }
 	end
 
+	describe "publications page" do
+		before { visit publications_path }
+
+		it { should have_selector('h1', text: 'All publications') }
+	end
+
 	describe "signin" do
 		before { visit signin_path }
 
