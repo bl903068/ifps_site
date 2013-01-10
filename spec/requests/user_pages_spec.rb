@@ -128,4 +128,34 @@ describe "User pages" do
 			specify { user.reload.email.should == new_email }
 		end
 	end
+
+	describe "following/followers" do
+	    let(:user) { FactoryGirl.create(:user) }
+    	let(:publication) { FactoryGirl.create(:publication) }
+    	before { user.follow!(publication) }
+
+    	before do
+    		sign_in user
+    	end
+
+    	describe "followed users" do
+      		before do
+        		visit following_user_path(user)
+      		end
+
+      		it { should have_selector('title', full_title('Publications co-writted')) }
+      		it { should have_selector('h3', text: 'Publications co-writted') }
+      		it { should have_link(publication.title, href: publication_path(publication)) }
+    	end
+
+    	describe "followers" do
+      		before do
+		        visit followers_publication_path(publication)
+      		end
+
+      		it { should have_selector('title', full_title('Authors')) }
+      		it { should have_selector('h3', text: 'Authors') }
+      		it { should have_link(user.name, href: user_path(user)) }
+    	end
+    end    
 end

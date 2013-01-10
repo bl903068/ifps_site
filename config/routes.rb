@@ -1,9 +1,20 @@
 IfpsSite::Application.routes.draw do
   get "users/new"
 
-  resources :users
+  resources :users do
+    member do
+      get :following
+    end
+  end
+
   resources :sessions, only: [:new, :create, :destroy]
-  resources :publications
+  resources :publications do
+    member do
+      get :followers
+    end
+  end
+
+  resources :relationships, only: [:create, :destroy]
 
   root to: 'static_pages#home'
 

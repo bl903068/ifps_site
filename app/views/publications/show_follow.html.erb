@@ -1,0 +1,34 @@
+<% provide(:title, @title) %>
+<div class="row">
+  <aside class="span4">
+    <section>
+      <h1><%= @publication.title %></h1>
+      <span><%= link_to "view this publication", @publication %></span>
+    </section>
+    <section>
+      <div class="stats">
+        <% if @publication.followers.any? %>
+          <a href="<%= followers_publication_path(@publication) %>">
+            <strong id="followers" class="stat">
+              <%= @publication.followers.count %>
+            </strong>
+            authors
+          </a>
+        <% end %>
+      </div>
+    </section>
+  </aside>
+  <div class="span8">
+    <h3><%= @title %></h3>
+    <% if @users.any? %>
+        <ul class="users">
+          <% @users.each do |user| %>
+            <li>
+              <%= link_to user.name, user %>
+            </li>
+          <% end %>
+        </ul>
+        <%= will_paginate @users %>
+    <% end %>
+  </div>
+</div>

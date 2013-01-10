@@ -1,0 +1,40 @@
+<% provide(:title, @title) %>
+<div class="row">
+  <aside class="span4">
+    <section>
+      <h1><%= @user.name %></h1>
+      <span><%= link_to "view my profile", @user %></span>
+      <span><b>Publications:</b> <%= @user.publications.count %></span>
+    </section>
+    <section>
+      <%= render 'shared/stats' %>
+    </section>
+  </aside>
+  <div class="span8">
+    <h3><%= @title %></h3>
+    <% if @publications.any? %>
+      <ul class="publi">
+        <% @publications.each do |publication| %>
+          <li>
+            <h4 class="title">
+              <%= link_to publication.title, publication %>
+            </h4>
+            <span class="ptype">
+              <%= publication.ptype %>
+            </span>
+            <span class="nameofpublication">
+              <%= publication.nameofpublication %>
+            </span>
+            <span class="resume">
+              <%= publication.resume %>
+            </span>
+            <span class="timestamp">
+              Posted: <%= publication.created_at.to_date %>. 
+            </span>
+          </li>
+        <% end %>
+      </ul>
+      <%= will_paginate @publications %>
+    <% end %>
+  </div>
+</div>

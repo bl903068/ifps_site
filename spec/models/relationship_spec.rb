@@ -16,7 +16,7 @@ describe Relationship do
 	#	it "should not allow acces to follower_id" do
 	#		expect do
 	#			Relationship.new(follower_id: follower.id)
-	#		end.to raise_error(ActiveModel::MassAssignementSecurity::Error)
+	#		end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
 	#	end
 	#end
 

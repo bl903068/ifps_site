@@ -6,6 +6,13 @@ class PublicationsController < ApplicationController
 		@publications = Publication.paginate(page: params[:page])
 	end
 
+	def followers
+    	@title = "Authors"
+    	@publication = Publication.find(params[:id])
+    	@users = @publication.followers.paginate(page: params[:page])
+    	render 'show_follow'
+  	end
+
 	def create
 		@publication = current_user.publications.build(params[:publication])
 		if @publication.save

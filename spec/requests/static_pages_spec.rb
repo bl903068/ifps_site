@@ -33,6 +33,39 @@ describe "Static pages" do
     				page.should have_selector("li##{item.id}", text: item.title)
     			end
     		end
+
+    		describe "follower/following counts" do
+    			let(:other_user) { FactoryGirl.create(:user) }
+    			let(:other_publication) { FactoryGirl.create(:publication) }
+
+                describe "followers counts invisible" do
+                    before do
+                        visit publication_path(other_publication)
+                    end
+
+                    it { should_not have_link("0 authors", href: followers_publication_path(other_publication)) }
+                end
+
+    			before do
+    				other_user.follow!(other_publication)
+    			end
+
+    			describe "following counts" do
+	    			before do
+    					visit root_path
+    				end
+
+    				it { should have_link("0 co-writted publications", href: following_user_path(user)) }
+    			end
+
+    			describe "followers counts" do
+    				before do
+    					visit publication_path(other_publication)
+    				end
+
+    				it { should have_link("1 authors", href: followers_publication_path(other_publication)) }
+    			end
+    		end
     	end
     end
 end

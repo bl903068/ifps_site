@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
 	attr_accessible :name, :first_name, :labo ,:email, :password, :password_confirmation
 	has_secure_password
+	
 	has_many :publications, dependent: :destroy
 	has_many :relationships, foreign_key: "follower_id", dependent: :destroy
 	has_many :followed_publications, through: :relationships, source: :followed

@@ -45,7 +45,6 @@ describe "Publication Pages" do
 			before { visit root_path }
 
 			it "should delete a publication" do
-				puts page.html
 				expect { click_link "delete" }.to change(Publication, :count).by(-1)
 			end
 		end
@@ -92,4 +91,60 @@ describe "Publication Pages" do
 			it { should have_content(publi.content) }
 		end
 	end
+
+	
+	describe "follow/unfollow buttons" do
+      	let(:other_user) { FactoryGirl.create(:user) }
+      	let(:other_publication) { FactoryGirl.create(:publication) }
+      	before { sign_in other_user }
+
+      	describe "following a user" do
+        	before do 
+        		visit publication_path(other_publication)
+        	end
+
+        	it "should increment the followed user count" do
+        	  	expect do
+            		click_button "Im Author of this Publication"
+          		end.to change(other_user.followed_publications, :count).by(1)
+        	end
+
+       		it "should increment the other user's followers count" do
+          		expect do
+            		click_button "Im Author of this Publication"
+          		end.to change(other_publication.followers, :count).by(1)
+        	end
+
+        	describe "toggling the button" do
+          		before do 
+          			click_button "Im Author of this Publication"
+          		end
+          		it { should have_selector("input[value= 'I make mistake']") }
+        	end
+      	end
+
+      	describe "unfollowing a user" do
+        	before do
+          		other_user.follow!(other_publication)
+          		visit publication_path(other_publication)
+        	end
+
+        	it "should decrement the followed user count" do
+          		expect do
+            		click_button "I make mistake"
+          		end.to change(other_user.followed_publications, :count).by(-1)
+        	end
+
+        	it "should decrement the other user's followers count" do
+          		expect do
+            		click_button "I make mistake"
+          		end.to change(other_publication.followers, :count).by(-1)
+        	end
+
+        	describe "toggling the button" do
+          		before { click_button "I make mistake" }
+          		it { should have_selector("input[value= 'Im Author of this Publication']") }
+        	end
+        end
+    end
 end

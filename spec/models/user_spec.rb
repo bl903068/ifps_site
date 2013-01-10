@@ -179,6 +179,7 @@ describe User do
 			it { should_not be_following(other_publication) }
 			its(:followed_publications) { should_not include(other_publication) }
 		end
+		
 		describe "followed publication" do
 			subject { other_publication }
 			its(:followers) { should include(@user) }

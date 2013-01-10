@@ -15,3 +15,16 @@
 <span class="timestamp">
 		Posted: <%= @publication.created_at.to_date %>. <a href="../users/<%= @publication.user_id %>">Watch the publicator Profile</a>.
 </span>
+<div class="span8">
+  <%= render 'follow_form' if signed_in? %>
+</div>
+<div class="stats">
+  <% if @publication.followers.any? %>
+    <a href="<%= followers_publication_path(@publication) %>">
+      <strong id="followers" class="stat">
+        <%= @publication.followers.count %>
+      </strong>
+      authors
+    </a>
+  <% end %>
+</div>

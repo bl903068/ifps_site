@@ -7,6 +7,13 @@ class UsersController < ApplicationController
     @publications = @user.publications.paginate(page: params[:page])
   end
 
+  def following
+    @title = "Publications co-writted"
+    @user = User.find(params[:id])
+    @publications = @user.followed_publications.paginate(page: params[:page])
+    render 'show_follow'
+  end
+
   def new
   	@user = User.new
   end
