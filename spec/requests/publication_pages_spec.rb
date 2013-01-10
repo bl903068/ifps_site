@@ -35,6 +35,21 @@ describe "Publication Pages" do
 			end
 		end
 	end
+	
+	describe "publication destruction" do
+		let(:user) { FactoryGirl.create(:user) }
+ 		before { sign_in user }
+		before { FactoryGirl.create(:publication, user: user) }
+
+		describe "as correct user" do
+			before { visit root_path }
+
+			it "should delete a publication" do
+				puts page.html
+				expect { click_link "delete" }.to change(Publication, :count).by(-1)
+			end
+		end
+	end
 
 	describe "index" do
 		let(:user) { FactoryGirl.create(:user) }

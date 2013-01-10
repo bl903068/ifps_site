@@ -18,6 +18,12 @@ describe User do
 	it { should respond_to(:remember_token) }
 	it { should respond_to(:authenticate) }
 	it { should respond_to(:publications) }
+	it { should respond_to(:feed) }
+	it { should respond_to(:relationships) }
+	it { should respond_to(:followed_publications) }
+	it { should respond_to(:following?) }
+	it { should respond_to(:follow!) }
+	it { should respond_to(:unfollow!) }
 
 	it { should be_valid }
 	
@@ -144,6 +150,38 @@ describe User do
 			publications.each do |publication|
 				Publication.find_by_id(publication.id).should be_nil
 			end
+		end
+
+		describe "status" do
+			let(:unfollowed_post) do
+				FactoryGirl.create(:publication, user: FactoryGirl.create(:user))
+			end
+
+			its(:feed) { should include(newer_publication) }
+			its(:feed) { should include(older_publication) }
+			its(:feed) { should_not include(unfollowed_post) }
+		end
+	end
+
+	describe "following" do
+		let(:other_publication) { FactoryGirl.create(:publication) }
+		before do
+			@user.save
+			@user.follow!(other_publication)
+		end
+
+		it { should be_following(other_publication) }
+		its(:followed_publications) { should include(other_publication) }
+
+		describe "and unfollowing" do
+			before { @user.unfollow!(other_publication) }
+
+			it { should_not be_following(other_publication) }
+			its(:followed_publications) { should_not include(other_publication) }
+		end
+		describe "followed publication" do
+			subject { other_publication }
+			its(:followers) { should include(@user) }
 		end
 	end
 end

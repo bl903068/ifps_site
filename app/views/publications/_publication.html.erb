@@ -14,4 +14,7 @@
 	<span class="timestamp">
 		Posted: <%= publication.created_at.to_date %>.
 	</span>
+	<% if current_user?(publication.user) %>
+		<%= link_to "delete", publication, method: :delete, data: { confirm: "You sure?" }, title: publication.title %>
+	<% end %>
 </li>

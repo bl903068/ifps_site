@@ -15,6 +15,8 @@ describe Publication do
 	it { should respond_to(:user_id) }
 	it { should respond_to(:user) }
 	its(:user) { should == user }
+	it { should respond_to(:relationships) }
+	it { should respond_to(:followers) }
 
 	it { should be_valid }
 
@@ -75,4 +77,5 @@ describe Publication do
 		before { @publication.content = " " }
 		it { should_not be_valid }
 	end
+
 end
